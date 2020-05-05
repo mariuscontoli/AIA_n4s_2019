@@ -19,12 +19,23 @@ void stop(char *str, size_t len)
     getline(&str, &len, stdin);
 }
 
+void get_infos(char *str, size_t len)
+{
+    put_command(INFO"\n");
+    getline(&str, &len, stdin);
+}
+
 int main(void)
 {
     char *str = NULL;
     size_t len = 0;
 
     start(str, len);
+    while (1)
+    {
+        get_infos(str, len);
+    }
+    
     stop(str, len);
 
     return (0);
