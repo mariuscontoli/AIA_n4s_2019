@@ -7,6 +7,7 @@ OBJ = 	$(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
+		cc -o $(NAME) $(OBJ)
 
 re:
 	make fclean
