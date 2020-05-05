@@ -8,6 +8,10 @@
 #ifndef N4S_H_
 #define N4S_H_
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 #define START "START_SIMULATION"
 #define STOP "STOP_SIMULATION"
 #define FOR "CAR_FORWARD:"
