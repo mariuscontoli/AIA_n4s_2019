@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define START "START_SIMULATION"
 #define STOP "STOP_SIMULATION"
@@ -24,5 +25,9 @@
 #define MAX_SPEED "GET_CAR_SPEED_MAX"
 #define MIN_SPEED "GET_CAR_SPEED_MIN"
 #define TIME "GET_INFO_SIMTIME"
+
+void my_putchar(char c);
+void put_command(char *str);
+void start(char *str, size_t len);
 
 #endif /* !N4S_H_ */
