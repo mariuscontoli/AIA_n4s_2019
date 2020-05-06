@@ -29,6 +29,13 @@
 #define MIN_SPEED "GET_CAR_SPEED_MIN"
 #define TIME "GET_INFO_SIMTIME"
 
+typedef struct direction
+{
+    float right;
+    float left;
+    float mid;
+} dir_t;
+
 void my_putchar(char c);
 void put_command(char *str);
 void start(char *str, size_t len);

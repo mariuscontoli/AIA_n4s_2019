@@ -44,7 +44,7 @@ int is_track_cleared(char *str)
     int i = 0;
 
     tab = my_str_to_word_array(str, delim);
-    
+
     while (tab[i] != NULL) {
         if (strcmp("Track Cleared", tab[i]) == 0) {
             put_command(STOP"\n");
@@ -55,12 +55,37 @@ int is_track_cleared(char *str)
     return (1);
 }
 
+int forward(dir_t *dir, char *str, size_t len)
+{
+    if (dir->mid < 2000) {
+        put_command(WHEELS"0.0\n");
+        str = get_next_line(0);
+        if (is_track_cleared(str) == 0)
+            return (0);
+        put_command(FOR"1\n");
+        str = get_next_line(0);
+        if (is_track_cleared(str) == 0)
+            return (0);
+    }
+    return (1);
+}
+
+int move_car(dir_t *dir, char *str, size_t len)
+{
+    if (forward(dir, str, len) == 0)
+        return (0);
+
+    return (1);
+}
+
 int main(void)
 {
     char *str = NULL;
     size_t len = 0;
     char **infos = NULL;
     int offset = 1;
+    float middle;
+    dir_t dir;
 
     start(str, len);
     car_forward(str, len);
@@ -69,6 +94,9 @@ int main(void)
         put_command(INFO"\n");
         str = get_next_line(0);
         offset = is_track_cleared(str);
+        infos = my_str_to_word_array(str, delim);
+        dir.mid = atoi(infos[17]);
+        offset = move_car(&dir, str, len);
     }
     stop(str, len);
 
