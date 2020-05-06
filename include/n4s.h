@@ -35,5 +35,6 @@ int count_word_len(char const *str, int (*to_remove)(char const *c), int *t);
 int count_word(char const *str, int (*to_remove)(char const *c), int *i);
 char **my_str_to_word_array(char const *str, int (*to_remove)(char const *c));
 char *my_strncdup(char *dest, char const *str, int n);
+unsigned int my_strlen(char const *str);
 
 #endif /* !N4S_H_ */

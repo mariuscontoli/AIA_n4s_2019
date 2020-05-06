@@ -10,6 +10,7 @@
 void start(char *str, size_t len)
 {
     put_command(START"\n");
+    printf("BITE\n");
     getline(&str, &len, stdin);
 }
 
@@ -42,11 +43,11 @@ int is_track_cleared(char *str)
 {
     char **tab = NULL;
     int i = 0;
-
-    tab = my_str_to_word_array(str, delim(str));
-    
+    printf("CECI EST STR : %s\n", str);
+    tab = my_str_to_word_array(str, delim);
+    printf("%s\n", tab[0]);
     while (tab[i] != NULL) {
-        if (strcmp("Track Cleared", tab[i])) {
+        if (strcmp("Track Cleared", tab[i]) == 0) {
             put_command(STOP"\n");
             return (0);
         }
