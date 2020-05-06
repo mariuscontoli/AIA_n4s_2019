@@ -10,26 +10,25 @@
 void start(char *str, size_t len)
 {
     put_command(START"\n");
-    printf("BITE\n");
-    getline(&str, &len, stdin);
+    str = get_next_line(0);
 }
 
 void stop(char *str, size_t len)
 {
     put_command(STOP"\n");
-    getline(&str, &len, stdin);
+    str = get_next_line(0);
 }
 
 void get_infos(char *str, size_t len)
 {
     put_command(INFO"\n");
-    getline(&str, &len, stdin);
+    str = get_next_line(0);
 }
 
 void car_forward(char *str, size_t len)
 {
     put_command(FOR"0.3\n");
-    getline(&str, &len, stdin);
+    str = get_next_line(0);;
 }
 
 int delim(char const *str)
@@ -43,9 +42,9 @@ int is_track_cleared(char *str)
 {
     char **tab = NULL;
     int i = 0;
-    printf("CECI EST STR : %s\n", str);
+
     tab = my_str_to_word_array(str, delim);
-    printf("%s\n", tab[0]);
+    
     while (tab[i] != NULL) {
         if (strcmp("Track Cleared", tab[i]) == 0) {
             put_command(STOP"\n");
@@ -67,7 +66,8 @@ int main(void)
     car_forward(str, len);
     while (offset)
     {
-        get_infos(str, len);
+        put_command(INFO"\n");
+        str = get_next_line(0);
         offset = is_track_cleared(str);
     }
     stop(str, len);

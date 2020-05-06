@@ -14,6 +14,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
+#include "../src/get_next_line.h"
 
 #define START "START_SIMULATION"
 #define STOP "STOP_SIMULATION"
