@@ -31,12 +31,19 @@ void car_forward(char *str, size_t len)
     getline(&str, &len, stdin);
 }
 
+int delim(char const *str)
+{
+    int i = 0;
+    for (; str[i] == ':' && str[i] != '\0'; i++);
+    return i;
+} 
+
 int is_track_cleared(char *str)
 {
     char **tab = NULL;
     int i = 0;
 
-    /* INSERT STR TO WORD ARRAY */
+    tab = my_str_to_word_array(str, delim(str));
     
     while (tab[i] != NULL) {
         if (strcmp("Track Cleared", tab[i])) {

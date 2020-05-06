@@ -31,5 +31,9 @@
 void my_putchar(char c);
 void put_command(char *str);
 void start(char *str, size_t len);
+int count_word_len(char const *str, int (*to_remove)(char const *c), int *t);
+int count_word(char const *str, int (*to_remove)(char const *c), int *i);
+char **my_str_to_word_array(char const *str, int (*to_remove)(char const *c));
+char *my_strncdup(char *dest, char const *str, int n);
 
 #endif /* !N4S_H_ */
