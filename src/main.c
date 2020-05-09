@@ -57,24 +57,28 @@ int is_track_cleared(char *str)
 
 int forward(dir_t *dir, char *str, size_t len)
 {
-    if (dir->mid < 2000) {
-        put_command(WHEELS"0.0\n");
+    if (dir->mid > 2000) {
+        put_command(FOR"1.0\n");
         str = get_next_line(0);
-        if (is_track_cleared(str) == 0)
-            return (0);
-        put_command(FOR"1\n");
+    }
+    if (dir->mid > 1500) {
+        put_command(FOR"0.8\n");
         str = get_next_line(0);
-        if (is_track_cleared(str) == 0)
-            return (0);
+    }
+    if (dir->mid > 1000) {
+        put_command(FOR"0.6\n");
+        str = get_next_line(0);
+    }
+    if (dir->mid < 1000) {
+        put_command(FOR"0.1\n");
+        str = get_next_line(0);
     }
     return (1);
 }
 
 int move_car(dir_t *dir, char *str, size_t len)
 {
-    if (forward(dir, str, len) == 0)
-        return (0);
-
+    forward(dir, str, len);
     return (1);
 }
 
@@ -88,15 +92,16 @@ int main(void)
     dir_t dir;
 
     start(str, len);
-    car_forward(str, len);
     while (offset)
     {
         put_command(INFO"\n");
         str = get_next_line(0);
+        offset = move_car(&dir, str, len);
         offset = is_track_cleared(str);
         infos = my_str_to_word_array(str, delim);
         dir.mid = atoi(infos[17]);
-        offset = move_car(&dir, str, len);
+        if (is_track_cleared(str) == 0)
+            return (0);
     }
     stop(str, len);
 
