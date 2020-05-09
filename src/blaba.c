@@ -1,12 +1,11 @@
 /*
-** EPITECH PROJECT, 2019
-** my_str_to_word_array
+** EPITECH PROJECT, 2020
+** str_to_tab.c
 ** File description:
-** my_str_to_word_array
+** str to tab source file
 */
 
-#include <my_tools.h>
-#include <stdlib.h>
+#include "../include/n4s.h"
 
 int count_word_len(char const *str, int (*to_remove)(char const *c), int *t)
 {
@@ -51,4 +50,34 @@ char **my_str_to_word_array(char const *str, int (*to_remove)(char const *c))
     }
     tab[h] = NULL;
     return tab;
+}
+
+char *my_strncdup(char *dest, char const *str, int n)
+{
+    int len = 0, i = 0;
+
+    if (n < my_strlen(str) && n >= 0)
+        len = my_strlen(dest) + n;
+    else
+        len = my_strlen(dest) + my_strlen(str);
+    char *src = malloc(sizeof(char) * (len + 1));
+    if (dest != NULL && dest[0] != '\0') {
+        for (; dest[i] != '\0'; i++)
+            src[i] = dest[i];
+        free(dest);
+    }
+    for (int j = 0; str[j] != '\0' && j < n; j++, i++) {
+        src[i] = str[j];
+    }
+    src[i] = '\0';
+    return (src);
+}
+
+unsigned int my_strlen(char const *str)
+{
+    unsigned int i = 0;
+    if (str == NULL)
+        return 0;
+    for (; str[i] != '\0'; i++);
+    return i;
 }
