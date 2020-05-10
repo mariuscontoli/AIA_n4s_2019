@@ -7,37 +7,6 @@
 
 #include "../include/n4s.h"
 
-void start(char *str, size_t len)
-{
-    put_command(START"\n");
-    str = get_next_line(0);
-}
-
-void stop(char *str, size_t len)
-{
-    put_command(STOP"\n");
-    str = get_next_line(0);
-}
-
-void get_infos(char *str, size_t len)
-{
-    put_command(INFO"\n");
-    str = get_next_line(0);
-}
-
-void car_forward(char *str, size_t len)
-{
-    put_command(FOR"0.3\n");
-    str = get_next_line(0);;
-}
-
-int delim(char const *str)
-{
-    int i = 0;
-    for (; str[i] == ':' && str[i] != '\0'; i++);
-    return i;
-} 
-
 int is_track_cleared(char *str)
 {
     char **tab = NULL;
@@ -72,8 +41,13 @@ int forward(dir_t *dir, char *str, size_t len)
     else if (dir->mid >= 600) {
         put_command(FOR"0.3\n");
         str = get_next_line(0);
-    }
-    else if (dir->mid >= 400) {
+    } else
+        forward_2(dir, str, len);
+}
+
+int forward_2(dir_t *dir, char *str, size_t len)
+{
+    if (dir->mid >= 400) {
         put_command(FOR"0.2\n");
         str = get_next_line(0);
     }
@@ -83,71 +57,6 @@ int forward(dir_t *dir, char *str, size_t len)
     }
     else {
         put_command(FOR"0.050\n");
-        str = get_next_line(0);
-    }
-    return (1);
-}
-
-int right(dir_t **dir, char *str, size_t len, char **infos)
-{
-    if ((*dir)->mid >= 1500) {
-        put_command(WHEELS"-0.005\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 1000) {
-        put_command(WHEELS"-0.05\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 600) {
-        put_command(WHEELS"-0.1\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 400) {
-        put_command(WHEELS"-0.3\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 200) {
-        put_command(WHEELS"-0.4\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 100) {
-        put_command(WHEELS"-0.5\n");
-        str = get_next_line(0);
-    }
-    else {
-        put_command(WHEELS"-0.6\n");
-        str = get_next_line(0);
-    }
-}
-
-int left(dir_t **dir, char *str, size_t len, char **infos)
-{
-    if ((*dir)->mid >= 1500) {
-        put_command(WHEELS"0.005\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 1000) {
-        put_command(WHEELS"0.05\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 600) {
-        put_command(WHEELS"0.1\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 400) {
-        put_command(WHEELS"0.3\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 200) {
-        put_command(WHEELS"0.4\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 100) {
-        put_command(WHEELS"0.5\n");
-        str = get_next_line(0);
-    }
-    else {
-        put_command(WHEELS"0.6\n");
         str = get_next_line(0);
     }
 }
@@ -167,16 +76,13 @@ int direct(dir_t *dir, char *str, size_t len, char **infos)
 
 int main(void)
 {
-    char *str = NULL;
+    char *str, **infos = NULL;
     size_t len = 0;
-    char **infos = NULL;
     int offset = 1;
     float middle;
     dir_t dir;
-
     start(str, len);
-    while (offset)
-    {
+    while (offset) {
         put_command(INFO"\n");
         str = get_next_line(0);
         if (is_track_cleared(str) == 0)
@@ -184,7 +90,6 @@ int main(void)
         infos = my_str_to_word_array(str, delim);
         dir.mid = atoi(infos[17]);
         offset = forward(&dir, str, len);
-
         put_command(INFO"\n");
         str = get_next_line(0);
         if (is_track_cleared(str) == 0)
@@ -194,6 +99,5 @@ int main(void)
         offset = direct(&dir, str, len, infos);
     }
     stop(str, len);
-
     return (0);
 }

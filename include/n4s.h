@@ -44,5 +44,14 @@ int count_word(char const *str, int (*to_remove)(char const *c), int *i);
 char **my_str_to_word_array(char const *str, int (*to_remove)(char const *c));
 char *my_strncdup(char *dest, char const *str, int n);
 unsigned int my_strlen(char const *str);
+void stop(char *str, size_t len);
+void car_forward(char *str, size_t len);
+int delim(char const *str);
+void get_infos(char *str, size_t len);
+int right_2(dir_t **dir, char *str, size_t len, char **infos);
+int left(dir_t **dir, char *str, size_t len, char **infos);
+int forward_2(dir_t *dir, char *str, size_t len);
+int right(dir_t **dir, char *str, size_t len, char **infos);
+int left_2(dir_t **dir, char *str, size_t len, char **infos);
 
 #endif /* !N4S_H_ */
