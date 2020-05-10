@@ -84,17 +84,71 @@ int forward(dir_t *dir, char *str, size_t len)
     return (1);
 }
 
+int right(dir_t **dir, char *str, size_t len, char **infos)
+{
+    if ((*dir)->mid >= 2000) {
+        put_command(WHEELS"-0.1\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 1500) {
+        put_command(WHEELS"-0.2\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 1000) {
+        put_command(WHEELS"-0.3\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 600) {
+        put_command(WHEELS"-0.5\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 300) {
+        put_command(WHEELS"-0.6\n");
+        str = get_next_line(0);
+    }
+    else {
+        put_command(WHEELS"-0.8\n");
+        str = get_next_line(0);
+    }
+}
+
+int left(dir_t **dir, char *str, size_t len, char **infos)
+{
+    if ((*dir)->mid >= 2000) {
+        put_command(WHEELS"0.1\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 1500) {
+        put_command(WHEELS"0.2\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 1000) {
+        put_command(WHEELS"0.3\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 600) {
+        put_command(WHEELS"0.5\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 300) {
+        put_command(WHEELS"0.6\n");
+        str = get_next_line(0);
+    }
+    else {
+        put_command(WHEELS"0.8\n");
+        str = get_next_line(0);
+    }
+}
+
 int direct(dir_t *dir, char *str, size_t len, char **infos)
 {
     dir->left = atoi(infos[3]);
     dir->right = atoi(infos[33]);
     if (dir->right > dir->left) {
-        put_command(WHEELS"-0.4\n");
-        str = get_next_line(0);
+        right(&dir, str, len, infos);
     }
     if (dir->right < dir->left) {
-        put_command(WHEELS"0.4\n");
-        str = get_next_line(0);
+        left(&dir, str, len, infos);
     }
     return(1);
 }
