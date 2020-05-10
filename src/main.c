@@ -66,14 +66,14 @@ int forward(dir_t *dir, char *str, size_t len)
         str = get_next_line(0);
     }
     else if (dir->mid >= 1000) {
-        put_command(FOR"0.6\n");
+        put_command(FOR"0.5\n");
         str = get_next_line(0);
     }
     else if (dir->mid >= 600) {
         put_command(FOR"0.4\n");
         str = get_next_line(0);
     }
-    else if (dir->mid >= 300) {
+    else if (dir->mid >= 400) {
         put_command(FOR"0.2\n");
         str = get_next_line(0);
     }
@@ -86,56 +86,56 @@ int forward(dir_t *dir, char *str, size_t len)
 
 int right(dir_t **dir, char *str, size_t len, char **infos)
 {
-    if ((*dir)->mid >= 2000) {
-        put_command(WHEELS"-0.1\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 1500) {
-        put_command(WHEELS"-0.2\n");
+    if ((*dir)->mid >= 1500) {
+        put_command(WHEELS"-0.005\n");
         str = get_next_line(0);
     }
     else if ((*dir)->mid >= 1000) {
-        put_command(WHEELS"-0.3\n");
+        put_command(WHEELS"-0.05\n");
         str = get_next_line(0);
     }
     else if ((*dir)->mid >= 600) {
-        put_command(WHEELS"-0.5\n");
+        put_command(WHEELS"-0.1\n");
         str = get_next_line(0);
     }
-    else if ((*dir)->mid >= 300) {
-        put_command(WHEELS"-0.6\n");
+    else if ((*dir)->mid >= 400) {
+        put_command(WHEELS"-0.2\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 200) {
+        put_command(WHEELS"-0.3\n");
         str = get_next_line(0);
     }
     else {
-        put_command(WHEELS"-0.8\n");
+        put_command(WHEELS"-0.5\n");
         str = get_next_line(0);
     }
 }
 
 int left(dir_t **dir, char *str, size_t len, char **infos)
 {
-    if ((*dir)->mid >= 2000) {
-        put_command(WHEELS"0.1\n");
-        str = get_next_line(0);
-    }
-    else if ((*dir)->mid >= 1500) {
-        put_command(WHEELS"0.2\n");
+    if ((*dir)->mid >= 1500) {
+        put_command(WHEELS"0.005\n");
         str = get_next_line(0);
     }
     else if ((*dir)->mid >= 1000) {
-        put_command(WHEELS"0.3\n");
+        put_command(WHEELS"0.05\n");
         str = get_next_line(0);
     }
     else if ((*dir)->mid >= 600) {
-        put_command(WHEELS"0.5\n");
+        put_command(WHEELS"0.1\n");
         str = get_next_line(0);
     }
-    else if ((*dir)->mid >= 300) {
-        put_command(WHEELS"0.6\n");
+    else if ((*dir)->mid >= 400) {
+        put_command(WHEELS"0.2\n");
+        str = get_next_line(0);
+    }
+    else if ((*dir)->mid >= 200) {
+        put_command(WHEELS"0.3\n");
         str = get_next_line(0);
     }
     else {
-        put_command(WHEELS"0.8\n");
+        put_command(WHEELS"0.5\n");
         str = get_next_line(0);
     }
 }
