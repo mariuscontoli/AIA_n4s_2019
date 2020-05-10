@@ -57,29 +57,48 @@ int is_track_cleared(char *str)
 
 int forward(dir_t *dir, char *str, size_t len)
 {
-    if (dir->mid > 2000) {
+    if (dir->mid >= 2000) {
         put_command(FOR"1.0\n");
         str = get_next_line(0);
     }
-    if (dir->mid > 1500) {
+    else if (dir->mid >= 1500) {
         put_command(FOR"0.8\n");
         str = get_next_line(0);
     }
-    if (dir->mid > 1000) {
+    else if (dir->mid >= 1000) {
         put_command(FOR"0.6\n");
         str = get_next_line(0);
     }
-    if (dir->mid < 1000) {
+    else if (dir->mid >= 600) {
+        put_command(FOR"0.4\n");
+        str = get_next_line(0);
+    }
+    else if (dir->mid >= 300) {
+        put_command(FOR"0.2\n");
+        str = get_next_line(0);
+    }
+    else {
         put_command(FOR"0.1\n");
         str = get_next_line(0);
     }
+    printf("%d\n", G_SPEED);str = get_next_line(0);
     return (1);
 }
 
-int move_car(dir_t *dir, char *str, size_t len)
+int direct(dir_t *dir, char *str, size_t len, char **infos)
 {
-    forward(dir, str, len);
-    return (1);
+    dir->left = atoi(infos[3]);
+    dir->right = atoi(infos[33]);
+    if (dir->right > dir->left) {
+        put_command(WHEELS"-0.4\n");
+        str = get_next_line(0);
+    }
+    if (dir->right < dir->left) {
+        put_command(WHEELS"0.4\n");
+        str = get_next_line(0);
+    }
+    
+    return(1);
 }
 
 int main(void)
@@ -96,12 +115,19 @@ int main(void)
     {
         put_command(INFO"\n");
         str = get_next_line(0);
-        offset = move_car(&dir, str, len);
-        offset = is_track_cleared(str);
-        infos = my_str_to_word_array(str, delim);
-        dir.mid = atoi(infos[17]);
         if (is_track_cleared(str) == 0)
             return (0);
+        infos = my_str_to_word_array(str, delim);
+        dir.mid = atoi(infos[17]);
+        offset = forward(&dir, str, len);
+
+        put_command(INFO"\n");
+        str = get_next_line(0);
+        if (is_track_cleared(str) == 0)
+            return (0);
+        infos = my_str_to_word_array(str, delim);
+        dir.mid = atoi(infos[17]);
+        offset = direct(&dir, str, len, infos);
     }
     stop(str, len);
 
