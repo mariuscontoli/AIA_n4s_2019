@@ -81,7 +81,6 @@ int forward(dir_t *dir, char *str, size_t len)
         put_command(FOR"0.1\n");
         str = get_next_line(0);
     }
-    printf("%d\n", G_SPEED);str = get_next_line(0);
     return (1);
 }
 
@@ -97,7 +96,6 @@ int direct(dir_t *dir, char *str, size_t len, char **infos)
         put_command(WHEELS"0.4\n");
         str = get_next_line(0);
     }
-    
     return(1);
 }
 
